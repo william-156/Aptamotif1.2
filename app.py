@@ -187,17 +187,14 @@ with tab1:
             # Load example sequences
             try:
                 with open('example_sequences.fasta', 'r') as f:
-                    demo_sequences = f.read()
-                st.session_state.demo_sequences = demo_sequences
-                st.rerun()
+                    st.session_state.sequence_input = f.read()
             except FileNotFoundError:
-                st.session_state.demo_sequences = """>Clone_1
+                st.session_state.sequence_input = """>Clone_1
 GGGAGATACCAGCTTATTCAATTGGATCCGGATCCGGATCCGGACCTAAGATAGTAAGTGCAATCT
 >Clone_2
 GGGAGATACCAGCTTATTCAATTCCAATTCCAATTCCAATTCCAATTCCAGATAGTAAGTGCAATCT
 >Clone_3
 GGGAGATACCAGCTTATTCAATTGGTTAAGGTTAAGGTTAAGGTTAACGAGATAGTAAGTGCAATCT"""
-                st.rerun()
     with demo_col2:
         st.info("👈 **Click to load 15 example sequences** with known motifs (GGATCC, CCAATT, GGTTAA). Perfect for testing!")
     
@@ -212,16 +209,14 @@ GGGAGATACCAGCTTATTCAATTGGTTAAGGTTAAGGTTAAGGTTAACGAGATAGTAAGTGCAATCT"""
             horizontal=True
         )
         
-        # Check if demo sequences are in session state
-        if 'demo_sequences' in st.session_state:
-            default_value = st.session_state.demo_sequences
-        else:
-            default_value = ""
-        
         if input_method == "Paste Sequences":
+            # Initialize session state for sequence input if not exists
+            if 'sequence_input' not in st.session_state:
+                st.session_state.sequence_input = ""
+            
             sequence_input = st.text_area(
                 "Enter Sequences",
-                value=default_value,
+                value=st.session_state.sequence_input,
                 height=300,
                 placeholder="Paste sequences here (one per line or FASTA format)...\n\n"
                            "Example:\n"
@@ -243,9 +238,9 @@ GGGAGATACCAGCTTATTCAATTGGTTAAGGTTAAGGTTAAGGTTAACGAGATAGTAAGTGCAATCT"""
             sequence_input = ""
             if uploaded_file is not None:
                 sequence_input = uploaded_file.read().decode('utf-8')
-            # Clear demo sequences when switching to upload
-            if 'demo_sequences' in st.session_state:
-                del st.session_state.demo_sequences
+            # Clear text input when switching to upload
+            if 'sequence_input' in st.session_state:
+                st.session_state.sequence_input = ""
     
     with col2:
         st.info("""
