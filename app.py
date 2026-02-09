@@ -459,7 +459,7 @@ with tab2:
         with filter_col1:
             show_only_significant = st.checkbox("Show only significant motifs (adj. p < 0.05)", value=False)
         with filter_col2:
-            min_enrichment = st.slider("Minimum fold enrichment", 1.0, 10.0, 1.0, 0.5)
+            min_enrichment = st.slider("Minimum fold enrichment", 1.0, 1000.0, 1.0, 1.0)
         
         # Filter motifs based on selection
         display_motifs = results['motifs']
