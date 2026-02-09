@@ -193,7 +193,7 @@ with tab1:
 
         
     with demo_col2:
-        st.info("👈 **Click to load 15 example sequences** with known motifs (GGATCC, CCAATT, GGTTAA). Perfect for testing!")
+        st.info("👈 **Click to load 19 example sequences from real-world aptamer pool sanger sequencing data (courtesy of Will Euston and Aptamers FRI stream @ UT Austin")
     
     st.markdown("---")
     
