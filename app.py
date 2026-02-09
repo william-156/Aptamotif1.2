@@ -885,7 +885,7 @@ with tab3:
     
     ### Support
     
-    For questions or issues, please contact your bioinformatics core facility.
+    For questions or issues, please contact your bioinformatics core or Will Euston (https://www.linkedin.com/in/william-euston-aab193242/).
     """)
 
 
@@ -893,7 +893,7 @@ with tab3:
 st.markdown("---")
 st.markdown("""
 <div style='text-align: center; color: #666; padding: 1rem;'>
-    <p>AptaMotif v1.0 | Built with Streamlit, Biopython, and ViennaRNA</p>
+    <p>AptaMotif v1.2 | Built with Streamlit, Biopython, and ViennaRNA</p>
     <p>🧬 For research use only</p>
 </div>
 """, unsafe_allow_html=True)
