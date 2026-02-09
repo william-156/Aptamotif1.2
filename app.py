@@ -189,16 +189,15 @@ with tab1:
                 with open('example_sequences.fasta', 'r') as f:
                     demo_sequences = f.read()
                 st.session_state.demo_sequences = demo_sequences
-                st.success("✅ Demo sequences loaded! Scroll down and click 'Run Analysis'.")
+                st.rerun()
             except FileNotFoundError:
-                st.error("Demo file not found. Using default example.")
                 st.session_state.demo_sequences = """>Clone_1
 GGGAGATACCAGCTTATTCAATTGGATCCGGATCCGGATCCGGACCTAAGATAGTAAGTGCAATCT
 >Clone_2
 GGGAGATACCAGCTTATTCAATTCCAATTCCAATTCCAATTCCAATTCCAGATAGTAAGTGCAATCT
 >Clone_3
 GGGAGATACCAGCTTATTCAATTGGTTAAGGTTAAGGTTAAGGTTAACGAGATAGTAAGTGCAATCT"""
-    
+                st.rerun()
     with demo_col2:
         st.info("👈 **Click to load 15 example sequences** with known motifs (GGATCC, CCAATT, GGTTAA). Perfect for testing!")
     
