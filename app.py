@@ -654,23 +654,8 @@ with tab2:
                         with col_struct2:
                             # Button to generate SVG on demand
                             button_key = f"svg_btn_{seq_dict['id']}"
-
-                            """ DEPRECATED (ONLY for ViennaRNA)
-                            layout_options = {
-                                "Naview (default)": 1,
-                                "Radial": 2,
-                                "Circular": 3,
-                                "RNApuzzler": 4,
-                            }
-
-                            layout_label = st.selectbox(
-                                "ViennaRNA structure layout",
-                                list(layout_options.keys()),
-                                key=f"layout_{seq_dict['id']}"
-                            )
                             
-                            layout = layout_options[layout_label]
-                            """
+                            layout = 1 (default)
                             
                             if st.button(f"🎨 Generate Structure Diagram", key=button_key):
                                 with st.spinner("Generating SVG..."):
