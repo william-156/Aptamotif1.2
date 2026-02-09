@@ -184,17 +184,14 @@ with tab1:
     
     with demo_col1:
         if st.button("🚀 LOAD DEMO SEQUENCES", type="primary", use_container_width=True):
-            # Load example sequences
             try:
-                with open('example_sequences.fasta', 'r') as f:
-                    st.session_state.sequence_input = f.read()
-            except FileNotFoundError:
-                st.session_state.sequence_input = """>Clone_1
-GGGAGATACCAGCTTATTCAATTGGATCCGGATCCGGATCCGGACCTAAGATAGTAAGTGCAATCT
->Clone_2
-GGGAGATACCAGCTTATTCAATTCCAATTCCAATTCCAATTCCAATTCCAGATAGTAAGTGCAATCT
->Clone_3
-GGGAGATACCAGCTTATTCAATTGGTTAAGGTTAAGGTTAAGGTTAACGAGATAGTAAGTGCAATCT"""
+                with open("example_sequences.fasta", "r") as f:
+                    st.session_state.sequence_text_area = f.read()
+                st.rerun()
+            except Exception as e:
+                st.error(f"Could not load demo sequences: {e}")
+
+        
     with demo_col2:
         st.info("👈 **Click to load 15 example sequences** with known motifs (GGATCC, CCAATT, GGTTAA). Perfect for testing!")
     
@@ -213,11 +210,11 @@ GGGAGATACCAGCTTATTCAATTGGTTAAGGTTAAGGTTAAGGTTAACGAGATAGTAAGTGCAATCT"""
             # Initialize session state for sequence input if not exists
             if 'sequence_input' not in st.session_state:
                 st.session_state.sequence_input = ""
-            
+
             sequence_input = st.text_area(
                 "Enter Sequences",
-                value=st.session_state.sequence_input,
                 height=300,
+                key="sequence_text_area",
                 placeholder="Paste sequences here (one per line or FASTA format)...\n\n"
                            "Example:\n"
                            ">Seq1\n"
@@ -225,10 +222,9 @@ GGGAGATACCAGCTTATTCAATTGGTTAAGGTTAAGGTTAAGGTTAACGAGATAGTAAGTGCAATCT"""
                            "GGATCCGGATCCGGATCCAGATAGTAAGTGCAATCT\n"
                            ">Seq2\n"
                            "TTCTAATACGACTCACTATAGGGAGATACCAGCTTATTCAATT"
-                           "CCAATTCCAATTCCAATTCCAGATAGTAAGTGCAATCT",
-                help="Enter sequences in FASTA format or plain text (one per line)",
-                key="sequence_text_area"
+                           "CCAATTCCAATTCCAATTCCAGATAGTAAGTGCAATCT"
             )
+
         else:
             uploaded_file = st.file_uploader(
                 "Upload Sequence File",
@@ -237,7 +233,7 @@ GGGAGATACCAGCTTATTCAATTGGTTAAGGTTAAGGTTAAGGTTAACGAGATAGTAAGTGCAATCT"""
             )
             sequence_input = ""
             if uploaded_file is not None:
-                sequence_input = uploaded_file.read().decode('utf-8')
+                st.session_state.sequence_text_area = uploaded_file.read().decode("utf-8")
             # Clear text input when switching to upload
             if 'sequence_input' in st.session_state:
                 st.session_state.sequence_input = ""
