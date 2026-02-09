@@ -188,12 +188,10 @@ with tab1:
             try:
                 with open('example_sequences.fasta', 'r') as f:
                     demo_sequences = f.read()
-                st.session_state.demo_loaded = True
                 st.session_state.demo_sequences = demo_sequences
-                st.success("✅ Demo sequences loaded! Click 'Run Analysis' below.")
+                st.success("✅ Demo sequences loaded! Scroll down and click 'Run Analysis'.")
             except FileNotFoundError:
                 st.error("Demo file not found. Using default example.")
-                st.session_state.demo_loaded = True
                 st.session_state.demo_sequences = """>Clone_1
 GGGAGATACCAGCTTATTCAATTGGATCCGGATCCGGATCCGGACCTAAGATAGTAAGTGCAATCT
 >Clone_2
@@ -215,8 +213,8 @@ GGGAGATACCAGCTTATTCAATTGGTTAAGGTTAAGGTTAAGGTTAACGAGATAGTAAGTGCAATCT"""
             horizontal=True
         )
         
-        # Use demo sequences if loaded, otherwise show empty/uploaded
-        if 'demo_loaded' in st.session_state and st.session_state.demo_loaded:
+        # Check if demo sequences are in session state
+        if 'demo_sequences' in st.session_state:
             default_value = st.session_state.demo_sequences
         else:
             default_value = ""
@@ -234,11 +232,9 @@ GGGAGATACCAGCTTATTCAATTGGTTAAGGTTAAGGTTAAGGTTAACGAGATAGTAAGTGCAATCT"""
                            ">Seq2\n"
                            "TTCTAATACGACTCACTATAGGGAGATACCAGCTTATTCAATT"
                            "CCAATTCCAATTCCAATTCCAGATAGTAAGTGCAATCT",
-                help="Enter sequences in FASTA format or plain text (one per line)"
+                help="Enter sequences in FASTA format or plain text (one per line)",
+                key="sequence_text_area"
             )
-            # Clear demo flag after displaying
-            if 'demo_loaded' in st.session_state:
-                st.session_state.demo_loaded = False
         else:
             uploaded_file = st.file_uploader(
                 "Upload Sequence File",
@@ -248,9 +244,9 @@ GGGAGATACCAGCTTATTCAATTGGTTAAGGTTAAGGTTAAGGTTAACGAGATAGTAAGTGCAATCT"""
             sequence_input = ""
             if uploaded_file is not None:
                 sequence_input = uploaded_file.read().decode('utf-8')
-            # Clear demo if switching to upload
-            if 'demo_loaded' in st.session_state:
-                st.session_state.demo_loaded = False
+            # Clear demo sequences when switching to upload
+            if 'demo_sequences' in st.session_state:
+                del st.session_state.demo_sequences
     
     with col2:
         st.info("""
@@ -899,7 +895,7 @@ with tab3:
     
     ### Support
     
-    For questions or issues, please reach out at [google form]
+    For questions or issues, please contact your bioinformatics core facility.
     """)
 
 
