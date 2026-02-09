@@ -432,7 +432,7 @@ with tab2:
         with filter_col1:
             show_only_significant = st.checkbox("Show only significant motifs (adj. p < 0.05)", value=False)
         with filter_col2:
-            min_enrichment = st.slider("Minimum fold enrichment", 1.0, 10.0, 1.0, 0.5)
+            min_enrichment = st.slider("Minimum fold enrichment", 10.0, 10000000.0, 1000.0, 10.0)
         
         # Filter motifs based on selection
         display_motifs = results['motifs']
@@ -654,7 +654,8 @@ with tab2:
                         with col_struct2:
                             # Button to generate SVG on demand
                             button_key = f"svg_btn_{seq_dict['id']}"
-                            
+
+                            """ DEPRECATED (ONLY for ViennaRNA)
                             layout_options = {
                                 "Naview (default)": 1,
                                 "Radial": 2,
@@ -669,6 +670,7 @@ with tab2:
                             )
                             
                             layout = layout_options[layout_label]
+                            """
                             
                             if st.button(f"🎨 Generate Structure Diagram", key=button_key):
                                 with st.spinner("Generating SVG..."):
