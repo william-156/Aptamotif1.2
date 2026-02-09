@@ -178,6 +178,34 @@ tab1, tab2, tab3 = st.tabs(["📊 Input & Analysis", "📈 Results", "ℹ️ Hel
 with tab1:
     st.header("Sequence Input")
     
+    # Demo button - prominent placement at top
+    st.markdown("### 🎯 New User? Try the Demo!")
+    demo_col1, demo_col2 = st.columns([1, 3])
+    
+    with demo_col1:
+        if st.button("🚀 LOAD DEMO SEQUENCES", type="primary", use_container_width=True):
+            # Load example sequences
+            try:
+                with open('example_sequences.fasta', 'r') as f:
+                    demo_sequences = f.read()
+                st.session_state.demo_loaded = True
+                st.session_state.demo_sequences = demo_sequences
+                st.success("✅ Demo sequences loaded! Click 'Run Analysis' below.")
+            except FileNotFoundError:
+                st.error("Demo file not found. Using default example.")
+                st.session_state.demo_loaded = True
+                st.session_state.demo_sequences = """>Clone_1
+GGGAGATACCAGCTTATTCAATTGGATCCGGATCCGGATCCGGACCTAAGATAGTAAGTGCAATCT
+>Clone_2
+GGGAGATACCAGCTTATTCAATTCCAATTCCAATTCCAATTCCAATTCCAGATAGTAAGTGCAATCT
+>Clone_3
+GGGAGATACCAGCTTATTCAATTGGTTAAGGTTAAGGTTAAGGTTAACGAGATAGTAAGTGCAATCT"""
+    
+    with demo_col2:
+        st.info("👈 **Click to load 15 example sequences** with known motifs (GGATCC, CCAATT, GGTTAA). Perfect for testing!")
+    
+    st.markdown("---")
+    
     col1, col2 = st.columns([2, 1])
     
     with col1:
@@ -187,9 +215,16 @@ with tab1:
             horizontal=True
         )
         
+        # Use demo sequences if loaded, otherwise show empty/uploaded
+        if 'demo_loaded' in st.session_state and st.session_state.demo_loaded:
+            default_value = st.session_state.demo_sequences
+        else:
+            default_value = ""
+        
         if input_method == "Paste Sequences":
             sequence_input = st.text_area(
                 "Enter Sequences",
+                value=default_value,
                 height=300,
                 placeholder="Paste sequences here (one per line or FASTA format)...\n\n"
                            "Example:\n"
@@ -201,6 +236,9 @@ with tab1:
                            "CCAATTCCAATTCCAATTCCAGATAGTAAGTGCAATCT",
                 help="Enter sequences in FASTA format or plain text (one per line)"
             )
+            # Clear demo flag after displaying
+            if 'demo_loaded' in st.session_state:
+                st.session_state.demo_loaded = False
         else:
             uploaded_file = st.file_uploader(
                 "Upload Sequence File",
@@ -210,6 +248,9 @@ with tab1:
             sequence_input = ""
             if uploaded_file is not None:
                 sequence_input = uploaded_file.read().decode('utf-8')
+            # Clear demo if switching to upload
+            if 'demo_loaded' in st.session_state:
+                st.session_state.demo_loaded = False
     
     with col2:
         st.info("""
@@ -432,7 +473,7 @@ with tab2:
         with filter_col1:
             show_only_significant = st.checkbox("Show only significant motifs (adj. p < 0.05)", value=False)
         with filter_col2:
-            min_enrichment = st.slider("Minimum fold enrichment", 1.0, 1000.0, 1.0, 1.0)
+            min_enrichment = st.slider("Minimum fold enrichment", 1.0, 10.0, 1.0, 0.5)
         
         # Filter motifs based on selection
         display_motifs = results['motifs']
@@ -858,7 +899,7 @@ with tab3:
     
     ### Support
     
-    For questions or issues, please contact your bioinformatics core facility.
+    For questions or issues, please reach out at [google form]
     """)
 
 
