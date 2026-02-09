@@ -655,7 +655,7 @@ with tab2:
                             # Button to generate SVG on demand
                             button_key = f"svg_btn_{seq_dict['id']}"
                             
-                            layout = 1 (default)
+                            layout = 1 #default
                             
                             if st.button(f"🎨 Generate Structure Diagram", key=button_key):
                                 with st.spinner("Generating SVG..."):
