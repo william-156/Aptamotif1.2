@@ -192,7 +192,7 @@ with tab1:
                 st.error(f"Could not load demo sequences: {e}")
     
     with demo_col2:
-        st.info("👈 **Click to load 15 example sequences** with known motifs (GGATCC, CCAATT, GGTTAA). Perfect for testing!")
+        st.info("👈 **Click to load 19 example sequences from real-world aptamer pool Sanger sequencing data (courtesy of Will Euston and Aptamers FRI stream @ UT Austin)")
     
     st.markdown("---")
     
