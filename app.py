@@ -178,6 +178,24 @@ tab1, tab2, tab3 = st.tabs(["📊 Input & Analysis", "📈 Results", "ℹ️ Hel
 with tab1:
     st.header("Sequence Input")
     
+    # Demo button - prominent placement at top
+    st.markdown("### 🎯 New User? Try the Demo!")
+    demo_col1, demo_col2 = st.columns([1, 3])
+    
+    with demo_col1:
+        if st.button("🚀 LOAD DEMO SEQUENCES", type="primary", use_container_width=True):
+            try:
+                with open("example_sequences.fasta", "r") as f:
+                    st.session_state.sequence_text_area = f.read()
+                st.rerun()
+            except Exception as e:
+                st.error(f"Could not load demo sequences: {e}")
+    
+    with demo_col2:
+        st.info("👈 **Click to load 15 example sequences** with known motifs (GGATCC, CCAATT, GGTTAA). Perfect for testing!")
+    
+    st.markdown("---")
+    
     col1, col2 = st.columns([2, 1])
     
     with col1:
