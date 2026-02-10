@@ -192,7 +192,7 @@ with tab1:
                 st.error(f"Could not load demo sequences: {e}")
     
     with demo_col2:
-        st.info("👈 **Click to load 19 example sequences from real-world aptamer pool Sanger sequencing data (courtesy of Will Euston and Aptamers FRI stream @ UT Austin)")
+        st.info("👈 **Click to load 19 example sequences from real-world aptamer pool Sanger sequencing data, courtesy of Will Euston and Aptamers FRI stream @ UT Austin (https://fri.cns.utexas.edu/research-streams/aptamer)")
     
     st.markdown("---")
     
@@ -884,7 +884,7 @@ with tab3:
     
     ### Support
     
-    For questions or issues, please contact your bioinformatics core facility or Will Euston.
+    For questions or issues, please contact your bioinformatics core facility or Will Euston (https://www.linkedin.com/in/william-euston-aab193242/).
     """)
 
 
