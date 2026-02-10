@@ -178,25 +178,6 @@ tab1, tab2, tab3 = st.tabs(["📊 Input & Analysis", "📈 Results", "ℹ️ Hel
 with tab1:
     st.header("Sequence Input")
     
-    # Demo button - prominent placement at top
-    st.markdown("### 🎯 New User? Try the Demo!")
-    demo_col1, demo_col2 = st.columns([1, 3])
-    
-    with demo_col1:
-        if st.button("🚀 LOAD DEMO SEQUENCES", type="primary", use_container_width=True):
-            try:
-                with open("example_sequences.fasta", "r") as f:
-                    st.session_state.sequence_text_area = f.read()
-                st.rerun()
-            except Exception as e:
-                st.error(f"Could not load demo sequences: {e}")
-
-        
-    with demo_col2:
-        st.info("👈 **Click to load 19 example sequences from real-world aptamer pool sanger sequencing data (courtesy of Will Euston and Aptamers FRI stream @ UT Austin")
-    
-    st.markdown("---")
-    
     col1, col2 = st.columns([2, 1])
     
     with col1:
@@ -207,10 +188,6 @@ with tab1:
         )
         
         if input_method == "Paste Sequences":
-            # Initialize session state for sequence input if not exists
-            if 'sequence_input' not in st.session_state:
-                st.session_state.sequence_input = ""
-
             sequence_input = st.text_area(
                 "Enter Sequences",
                 height=300,
@@ -222,9 +199,9 @@ with tab1:
                            "GGATCCGGATCCGGATCCAGATAGTAAGTGCAATCT\n"
                            ">Seq2\n"
                            "TTCTAATACGACTCACTATAGGGAGATACCAGCTTATTCAATT"
-                           "CCAATTCCAATTCCAATTCCAGATAGTAAGTGCAATCT"
+                           "CCAATTCCAATTCCAATTCCAGATAGTAAGTGCAATCT",
+                help="Enter sequences in FASTA format or plain text (one per line)"
             )
-
         else:
             uploaded_file = st.file_uploader(
                 "Upload Sequence File",
@@ -233,10 +210,7 @@ with tab1:
             )
             sequence_input = ""
             if uploaded_file is not None:
-                st.session_state.sequence_text_area = uploaded_file.read().decode("utf-8")
-            # Clear text input when switching to upload
-            if 'sequence_input' in st.session_state:
-                st.session_state.sequence_input = ""
+                sequence_input = uploaded_file.read().decode('utf-8')
     
     with col2:
         st.info("""
@@ -459,7 +433,7 @@ with tab2:
         with filter_col1:
             show_only_significant = st.checkbox("Show only significant motifs (adj. p < 0.05)", value=False)
         with filter_col2:
-            min_enrichment = st.slider("Minimum fold enrichment", 1.0, 1000.0, 1.0, 1.0)
+            min_enrichment = st.slider("Minimum fold enrichment", 1.0, 10.0, 1.0, 0.5)
         
         # Filter motifs based on selection
         display_motifs = results['motifs']
@@ -885,7 +859,7 @@ with tab3:
     
     ### Support
     
-    For questions or issues, please contact your bioinformatics core or Will Euston (https://www.linkedin.com/in/william-euston-aab193242/).
+    For questions or issues, please contact Will Euston.
     """)
 
 
