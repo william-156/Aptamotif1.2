@@ -208,9 +208,16 @@ with tab1:
                 type=['txt', 'fasta', 'fa'],
                 help="Upload a text or FASTA file with sequences"
             )
-            sequence_input = ""
+            
             if uploaded_file is not None:
+                # Store uploaded content in session state
                 sequence_input = uploaded_file.read().decode('utf-8')
+                st.session_state.uploaded_sequences = sequence_input
+            elif 'uploaded_sequences' in st.session_state:
+                # Use previously uploaded content
+                sequence_input = st.session_state.uploaded_sequences
+            else:
+                sequence_input = ""
     
     with col2:
         st.info("""
@@ -859,7 +866,7 @@ with tab3:
     
     ### Support
     
-    For questions or issues, please contact Will Euston.
+    For questions or issues, please contact your bioinformatics core facility or Will Euston.
     """)
 
 
